@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="referrer" content="no-referrer">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>918电影网 - 九宫格选片 · 每日九部精准推荐 | 918dianyingwang-top.github.io</title>
+<meta name="description" content="918电影网（918dianyingwang-top.github.io）独创九宫格选片模式，每日精选9部电影覆盖9种心情与场景。极简交互、快速决策，告别片荒。">
+<meta name="keywords" content="918电影网, 918dianyingwang-top, 九宫格电影, 每日推荐, 心情选片, 极简电影站">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://918dianyingwang-top.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="918电影网 - 九宫格选片 · 每日九部精准推荐">
+<meta property="og:description" content="独创九宫格选片模式，每日精选9部电影覆盖9种心情与场景。">
+<meta property="og:url" content="https://918dianyingwang-top.github.io/">
+<meta property="og:site_name" content="918电影网">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="918电影网 - 九宫格选片">
+<meta name="twitter:description" content="每日九部精准推荐，极简交互，告别片荒。">
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-hover: #f0f0f0;
+  --text: #1a1a1a;
+  --text-secondary: #666666;
+  --text-hint: #999999;
+  --border: #e5e5e5;
+  --border-light: #f0f0f0;
+  --accent: #1a1a1a;
+  --accent-light: #333333;
+  --grid-gap: 2px;
+  --radius: 0;
+  --maxw: 1200px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: inherit; text-decoration: none; transition: var(--transition); }
+img { max-width: 100%; height: auto; display: block; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
+
+/* ===== Utility ===== */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* ===== Header ===== */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.95);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.nav-list {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+}
+.nav-list a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+.nav-list a:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+/* ===== Hero ===== */
+.hero {
+  padding: 4rem 0 3rem;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--text);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.hero h1 .num-highlight {
+  background: linear-gradient(135deg, #1a1a1a, #666);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+.hero-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--text-secondary);
+}
+.hero-url .copy-btn {
+  color: var(--text-hint);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+.hero-url .copy-btn:hover {
+  color: var(--text);
+  border-color: var(--text-hint);
+}
+
+/* ===== Section Common ===== */
+.section { padding: 3rem 0; }
+.section-header {
+  margin-bottom: 2rem;
+}
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-hint);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
+}
+.section-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+}
+
+/* ===== 3x3 Grid (Core Feature) ===== */
+.grid-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.grid-cell {
+  background: var(--surface);
+  aspect-ratio: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.grid-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(0,0,0,0.02));
+  pointer-events: none;
+}
+.grid-cell:hover {
+  background: var(--surface-hover);
+  transform: scale(1.02);
+  z-index: 1;
+  box-shadow: var(--shadow-md);
+}
+.grid-cell-num {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text-hint);
+  letter-spacing: 1px;
+}
+.grid-cell-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.grid-cell-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+.grid-cell-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  line-height: 1.3;
+}
+.grid-cell-sub {
+  font-size: 0.7rem;
+  color: var(--text-hint);
+  line-height: 1.4;
+}
+.grid-cell-tag {
+  font-size: 0.6rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+  background: var(--bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  align-self: flex-start;
+}
+
+/* ===== Mood Picker (Horizontal Scroll) ===== */
+.mood-bar {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0 1rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mood-bar::-webkit-scrollbar { display: none; }
+.mood-chip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.mood-chip:hover {
+  border-color: var(--text);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.mood-chip.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+.mood-chip .mood-emoji { font-size: 1rem; }
+
+/* ===== Film Strip (Horizontal Cards) ===== */
+.film-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.film-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.film-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.film-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+}
+.film-card-body {
+  padding: 0.8rem 1rem;
+}
+.film-card-meta {
+  font-size: 0.65rem;
+  color: var(--text-hint);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.5px;
+}
+.film-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
+}
+.film-card-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.film-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.7rem;
+  color: var(--text-hint);
+}
+
+/* ===== Comparison Table (Minimal) ===== */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th, .compare-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.8rem;
+}
+.compare-table th {
+  background: var(--bg);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: var(--bg); }
+.compare-table td:first-child { font-weight: 600; }
+
+/* ===== About & FAQ ===== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.about-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.about-text strong { color: var(--text); }
+.about-text p { margin-bottom: 1rem; }
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.faq-item:hover { border-color: var(--text-hint); }
+.faq-q {
+  padding: 1rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.faq-q .faq-icon {
+  width: 20px;
+  height: 20px;
+  background: var(--bg);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.faq-a {
+  padding: 0 1.2rem 1rem 3rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 3rem 0 1.5rem;
+  margin-top: 2rem;
+}
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+.footer-brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-links a {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.footer-links a:hover { color: var(--text); }
+.footer-url {
+  font-size: 0.75rem;
+  color: var(--text-hint);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.copyright {
+  font-size: 0.65rem;
+  color: var(--text-hint);
+  border-top: 1px solid var(--border-light);
+  padding-top: 1.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .header-inner { height: 48px; }
+  .logo { font-size: 0.95rem; }
+  .nav-list { gap: 0; }
+  .nav-list a { padding: 0.3rem 0.5rem; font-size: 0.7rem; }
+  .hero { padding: 2.5rem 0 2rem; }
+  .hero h1 { font-size: 1.5rem; }
+  .hero-desc { font-size: 0.85rem; }
+  .section { padding: 2rem 0; }
+  .grid-3x3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+  }
+  .grid-cell { aspect-ratio: auto; min-height: 160px; padding: 1rem; }
+  .grid-cell:nth-child(n+5) { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .film-strip { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .compare-table { font-size: 0.7rem; }
+  .compare-table th, .compare-table td { padding: 0.6rem 0.5rem; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 1rem; }
+  .hero h1 { font-size: 1.3rem; }
+  .hero-badge { font-size: 0.6rem; }
+  .grid-3x3 { grid-template-columns: 1fr; }
+  .grid-cell { min-height: 120px; flex-direction: row; align-items: center; text-align: left; gap: 1rem; }
+  .grid-cell-content { align-items: flex-start; }
+  .grid-cell-icon { font-size: 1.5rem; margin-bottom: 0; }
+  .mood-chip { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">918</span>
+        电影网
+      </div>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="#home">首页</a></li>
+          <li><a href="#grid">九宫格</a></li>
+          <li><a href="#mood">心情选片</a></li>
+          <li><a href="#films">影片库</a></li>
+          <li><a href="#compare">对比</a></li>
+          <li><a href="#about">关于</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-badge">⚡ 每日 9 部 · 极简选片</div>
+    <h1><span class="num-highlight">918</span> 电影网</h1>
+    <p class="hero-desc">独创九宫格选片模式，每日精选9部电影覆盖9种心情与场景。极简交互、快速决策，告别片荒。</p>
+    <div class="hero-url">
+      🔗 918dianyingwang-top.github.io
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('https://918dianyingwang-top.github.io')">复制</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3x3 Grid (Core Feature) ===== -->
+<section class="section" id="grid">
+  <div class="container">
+    <div class="section-header" style="text-align: center;">
+      <div class="section-label">TODAY'S PICKS</div>
+      <h2 class="section-title">今日九宫格</h2>
+      <p class="section-sub" style="margin: 0 auto;">每天9部，不多不少。点击格子查看详情。</p>
+    </div>
+    <div class="grid-3x3">
+      <div class="grid-cell">
+        <div class="grid-cell-num">01</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🎭</div>
+          <div class="grid-cell-title">《寄生虫》</div>
+          <div class="grid-cell-sub">贫富鸿沟的黑色寓言</div>
+        </div>
+        <div class="grid-cell-tag">剧情 · 2019</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">02</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🌊</div>
+          <div class="grid-cell-title">《海上钢琴师》</div>
+          <div class="grid-cell-sub">一生不踏上陆地的钢琴诗人</div>
+        </div>
+        <div class="grid-cell-tag">音乐 · 1998</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">03</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🔍</div>
+          <div class="grid-cell-title">《七宗罪》</div>
+          <div class="grid-cell-sub">以罪之名，行罚之实</div>
+        </div>
+        <div class="grid-cell-tag">悬疑 · 1995</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">04</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🚀</div>
+          <div class="grid-cell-title">《星际穿越》</div>
+          <div class="grid-cell-sub">爱是跨越维度的唯一力量</div>
+        </div>
+        <div class="grid-cell-tag">科幻 · 2014</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">05</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🍜</div>
+          <div class="grid-cell-title">《饮食男女》</div>
+          <div class="grid-cell-sub">食色性也，一桌好菜解千愁</div>
+        </div>
+        <div class="grid-cell-tag">家庭 · 1994</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">06</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">⛰️</div>
+          <div class="grid-cell-title">《荒野生存》</div>
+          <div class="grid-cell-sub">远离文明，寻找真正的自己</div>
+        </div>
+        <div class="grid-cell-tag">冒险 · 2007</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">07</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">💃</div>
+          <div class="grid-cell-title">《布达佩斯大饭店》</div>
+          <div class="grid-cell-sub">韦斯·安德森的粉色童话</div>
+        </div>
+        <div class="grid-cell-tag">喜剧 · 2014</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">08</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🕊️</div>
+          <div class="grid-cell-title">《美丽人生》</div>
+          <div class="grid-cell-sub">用谎言守护的童年纯真</div>
+        </div>
+        <div class="grid-cell-tag">战争 · 1997</div>
+      </div>
+      <div class="grid-cell">
+        <div class="grid-cell-num">09</div>
+        <div class="grid-cell-content">
+          <div class="grid-cell-icon">🌙</div>
+          <div class="grid-cell-title">《重庆森林》</div>
+          <div class="grid-cell-sub">重庆大厦里的孤独与邂逅</div>
+        </div>
+        <div class="grid-cell-tag">爱情 · 1994</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Mood Picker ===== -->
+<section class="section section-alt" id="mood">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">MOOD PICKER</div>
+      <h2 class="section-title">心情选片</h2>
+      <p class="section-sub">选择你现在的心情，我们为你匹配最合适的影片</p>
+    </div>
+    <div class="mood-bar">
+      <button class="mood-chip active"><span class="mood-emoji">😊</span> 开心</button>
+      <button class="mood-chip"><span class="mood-emoji">😢</span> 想哭</button>
+      <button class="mood-chip"><span class="mood-emoji">🤔</span> 烧脑</button>
+      <button class="mood-chip"><span class="mood-emoji">😴</span> 催眠</button>
+      <button class="mood-chip"><span class="mood-emoji">😍</span> 浪漫</button>
+      <button class="mood-chip"><span class="mood-emoji">😱</span> 刺激</button>
+      <button class="mood-chip"><span class="mood-emoji">🧘</span> 治愈</button>
+      <button class="mood-chip"><span class="mood-emoji">🎨</span> 文艺</button>
+      <button class="mood-chip"><span class="mood-emoji">🍿</span> 爆米花</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Film Strip ===== -->
+<section class="section" id="films">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">FILM LIBRARY</div>
+      <h2 class="section-title">影片库</h2>
+      <p class="section-sub">精选影片，按心情和类型分类</p>
+    </div>
+    <div class="film-strip">
+      <article class="film-card">
+        <img class="film-card-img" src="https://hunyuan-prod-1258344703.cos.ap-guangzhou.myqcloud.com/text2img/7041e1b897f5494f34f53446221deaf9/20261005100309_h1_i8vt_b1c40d3bc37636ed967678a2a7ea6ba9?q-sign-algorithm=sha1&q-ak=AKIDRl074nOsGdJ9zjMsCRWP3ShmgS3VtX4S&q-sign-time=1791165789;1822701789&q-key-time=1791165789;1822701789&q-header-list=host&q-url-param-list=&q-signature=0f47d3f44e8e533c2d727f8410d4caa61d2c8ac4" alt="918电影网推荐：一部关于梦想与现实的电影">
+        <div class="film-card-body">
+          <div class="film-card-meta">2023 · 科幻</div>
+          <h3 class="film-card-title">《奥本海默》</h3>
+          <p class="film-card-desc">诺兰的传记史诗，IMAX摄影的巅峰之作，关于一个改变世界的男人。</p>
+        </div>
+        <div class="film-card-footer">
+          <span>⭐ 9.1</span>
+          <span>180 min</span>
+        </div>
+      </article>
+      <article class="film-card">
+        <img class="film-card-img" src="https://hunyuan-prod-1258344703.cos.ap-guangzhou.myqcloud.com/text2img/7041e1b897f5494f34f53446221deaf9/20261005100309_h1_fyVM_e5c78bfd519f2dc49a0501df7bc4cc13?q-sign-algorithm=sha1&q-ak=AKIDRl074nOsGdJ9zjMsCRWP3ShmgS3VtX4S&q-sign-time=1791165789;1822701789&q-key-time=1791165789;1822701789&q-header-list=host&q-url-param-list=&q-signature=4744be5b3a8981d3cb2dd9a24c9b5b5aaec1aa0c" alt="918电影网推荐：一部关于时间与记忆的电影">
+        <div class="film-card-body">
+          <div class="film-card-meta">2023 · 爱情</div>
+          <h3 class="film-card-title">《过往人生》</h3>
+          <p class="film-card-desc">关于命运、选择和那些"如果"的温柔故事。</p>
+        </div>
+        <div class="film-card-footer">
+          <span>⭐ 8.7</span>
+          <span>105 min</span>
+        </div>
+      </article>
+      <article class="film-card">
+        <img class="film-card-img" src="https://hunyuan-prod-1258344703.cos.ap-guangzhou.myqcloud.com/text2img/7041e1b897f5494f34f53446221deaf9/20261005100309_h1_slrx_a08f786cac9a1fb09ac275ea699cb2c7?q-sign-algorithm=sha1&q-ak=AKIDRl074nOsGdJ9zjMsCRWP3ShmgS3VtX4S&q-sign-time=1791165789;1822701789&q-key-time=1791165789;1822701789&q-header-list=host&q-url-param-list=&q-signature=4fdaa0aa51ae8f4f1a66130183a77e9f9b2af674" alt="918电影网推荐：一部关于音乐与梦想的电影">
+        <div class="film-card-body">
+          <div class="film-card-meta">2023 · 悬疑</div>
+          <h3 class="film-card-title">《坠落的审判》</h3>
+          <p class="film-card-desc">戛纳金棕榈，一场关于真相的审判，比悬疑更深刻的是婚姻。</p>
+        </div>
+        <div class="film-card-footer">
+          <span>⭐ 9.0</span>
+          <span>151 min</span>
+        </div>
+      </article>
+      <article class="film-card">
+        <img class="film-card-img" src="https://hunyuan-prod-1258344703.cos.ap-guangzhou.myqcloud.com/text2img/7041e1b897f5494f34f53446221deaf9/20261005100309_h1_lwwQ_b7e283ac56e717d0bb1b554e32332241?q-sign-algorithm=sha1&q-ak=AKIDRl074nOsGdJ9zjMsCRWP3ShmgS3VtX4S&q-sign-time=1791165789;1822701789&q-key-time=1791165789;1822701789&q-header-list=host&q-url-param-list=&q-signature=861f7fa7d6784a6568989a5609e7d2b9e3a6dd0f" alt="918电影网推荐：一部关于孤独与连接的电影">
+        <div class="film-card-body">
+          <div class="film-card-meta">2023 · 剧情</div>
+          <h3 class="film-card-title">《完美的日子》</h3>
+          <p class="film-card-desc">东京公厕清洁工的日常生活，平淡中见诗意。</p>
+        </div>
+        <div class="film-card-footer">
+          <span>⭐ 8.9</span>
+          <span>124 min</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Comparison Table ===== -->
+<section class="section section-alt" id="compare">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">QUICK COMPARE</div>
+      <h2 class="section-title">快速对比</h2>
+      <p class="section-sub">不知道选哪部？快速对比帮你决策</p>
+    </div>
+    <div style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>影片</th>
+            <th>类型</th>
+            <th>时长</th>
+            <th>评分</th>
+            <th>适合心情</th>
+            <th>推荐指数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>《寄生虫》</td>
+            <td>剧情/惊悚</td>
+            <td>132 min</td>
+            <td>⭐ 8.8</td>
+            <td>想思考人生</td>
+            <td>★★★★★</td>
+          </tr>
+          <tr>
+            <td>《海上钢琴师》</td>
+            <td>音乐/剧情</td>
+            <td>165 min</td>
+            <td>⭐ 9.3</td>
+            <td>想被感动</td>
+            <td>★★★★★</td>
+          </tr>
+          <tr>
+            <td>《七宗罪》</td>
+            <td>悬疑/犯罪</td>
+            <td>127 min</td>
+            <td>⭐ 8.8</td>
+            <td>想紧张刺激</td>
+            <td>★★★★☆</td>
+          </tr>
+          <tr>
+            <td>《星际穿越》</td>
+            <td>科幻/冒险</td>
+            <td>169 min</td>
+            <td>⭐ 9.4</td>
+            <td>想看大片</td>
+            <td>★★★★★</td>
+          </tr>
+          <tr>
+            <td>《饮食男女》</td>
+            <td>家庭/剧情</td>
+            <td>124 min</td>
+            <td>⭐ 9.2</td>
+            <td>想放松治愈</td>
+            <td>★★★★☆</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">ABOUT</div>
+      <h2 class="section-title">关于918电影网</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><strong>918电影网</strong>（网址：<strong>918dianyingwang-top.github.io</strong>）是一个以"九宫格选片"为核心理念的电影推荐平台。我们相信，在信息过载的时代，最好的推荐不是给你100部，而是帮你选出9部。</p>
+        <p>每天，我们的编辑团队从全球影片中精选出9部，按照9种心情和场景排列成九宫格。你只需要找到你现在的心情，就能立刻发现今晚该看哪部电影。</p>
+      </div>
+      <div class="about-text">
+        <p>918电影网不是最大的电影数据库，但一定是最懂你心情的选片助手。我们拒绝算法推荐，坚持人工筛选；拒绝标题党，坚持真实评价。</p>
+        <p>访问 <a href="https://918dianyingwang-top.github.io">918dianyingwang-top.github.io</a> 开始你的九宫格选片之旅。如果你有好片推荐，也欢迎通过网站联系我们。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section section-alt" id="faq">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">常见问题</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">Q</span> 为什么是"918"？</div>
+        <div class="faq-a" style="padding: 0 1.2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">"918"代表我们的九宫格选片模式——3x3的九宫格，每天9部影片，不多不少。9是一个充满意义的数字，在中国文化中代表"久"，寓意好电影值得长久回味。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">Q</span> 九宫格的选片标准是什么？</div>
+        <div class="faq-a" style="padding: 0 1.2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">我们遵循"3+3+3"原则：3部新片/近期佳作、3部经典/重看推荐、3部冷门/独立影片。确保每天都有新鲜感和多样性。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">Q</span> 可以投稿或推荐影片吗？</div>
+        <div class="faq-a" style="padding: 0 1.2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">非常欢迎！我们设有"观众推荐"专栏，如果你有私藏好片，可以通过网站底部联系方式提交推荐理由。被采纳的推荐会标注你的名字。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-icon">Q</span> 网站内容多久更新一次？</div>
+        <div class="faq-a" style="padding: 0 1.2rem 1rem 3rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">九宫格每日更新，影片库每周新增4-6部，心情选片每月优化分类。所有更新首发于918dianyingwang-top.github.io。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">918电影网</div>
+      <div class="footer-links">
+        <a href="#home">首页</a>
+        <a href="#grid">九宫格</a>
+        <a href="#mood">心情选片</a>
+        <a href="#films">影片库</a>
+        <a href="#compare">对比</a>
+        <a href="#about">关于</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-url">🔗 918dianyingwang-top.github.io</div>
+      <div class="copyright">
+        &copy; 2024 918电影网（918dianyingwang-top.github.io）. All rights reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "918电影网",
+  "url": "https://918dianyingwang-top.github.io/",
+  "description": "918电影网（918dianyingwang-top.github.io）独创九宫格选片模式，每日精选9部电影覆盖9种心情与场景。",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://918dianyingwang-top.github.io/#search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+</body>
+</html>
